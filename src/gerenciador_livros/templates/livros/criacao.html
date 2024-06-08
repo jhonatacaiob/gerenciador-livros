@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<form action='/livros/criar/' method='post'>
+    <fieldset>
+        <legend>Dados do livro</legend>
+        <p>
+            <label for="titulo">Título do livro</label>
+            <input name="titulo" id="titulo" type="text" placeholder="Título do livro">
+        </p>
+
+        <p>
+            <label for="data_publicacao">Título do livro</label>
+            <input name="data_publicacao" id="data_publicacao" type="date" placeholder="Data de publicação1">
+        </p>
+
+        <p>
+            <label for="autor_id">Selecione um autor</label>
+            <select 
+                name="autor_id"
+                id="autor_id"
+                hx-get='/autores/options'
+                hx-target='this'
+                hx-swap='innerHTML'
+                hx-trigger="load"        
+            >
+            </select>
+        </p>
+
+    
+        <button>Save</button>
+    </fieldset>
+</form>
+
+{% endblock %}
