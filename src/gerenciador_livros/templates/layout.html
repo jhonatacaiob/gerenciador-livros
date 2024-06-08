@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{{ url_for('static', path='/js/htmx.js') }}"></script>
+    <link src="{{ url_for('static', path='/css/bahunya.min.css') }}"></link><link rel="stylesheet" href="{{ url_for('static', path='/css/bahunya.min.css') }}"></link>
+    <title>Gerenciador de livros pessoal</title>
+</head>
+
+<body hx-boost="true">
+    <main>
+        <header>
+            <h1>
+                <all-caps>Gerenciador de livros pessoal</all-caps>
+            </h1>
+
+            <nav>
+                <ul>
+                    <li><a href='/livros'>Livros</a></li>
+                    <li><a href='/autores'>Autores</a></li>
+
+                </ul>
+            </nav>
+        </header>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+
+</html>
