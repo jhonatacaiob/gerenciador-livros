@@ -1,12 +1,17 @@
 {% for livro in livros %}
 <tr>
-    <td><input type="checkbox" name="selected_livros_ids" value="{{ livro.id }}"></td>
     <td>{{livro.titulo}}</td>
     <td>{{livro.autor.nome}}</td>
     <td>{{livro.data_publicacao.year}}</td>
     <td>
-        <button>Editar</button>
-        <button>Excluir</button>
+        <a href="{{livro.id}}">Visualizar</a>
+    </td>
+    <td>
+        <a href="http://www.google.com">Editar</a>
+    </td>
+    <td>
+
+        <a href="http://www.google.com">Excluir</a>
     </td>
 </tr>
 {% endfor %}

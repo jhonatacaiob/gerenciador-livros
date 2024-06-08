@@ -37,7 +37,7 @@ def criar_livro_pagina(request: Request):
     return templates.TemplateResponse(name='criacao.html', request=request)
 
 
-@router.post('/criar/', response_class=HTMLResponse)
+@router.post('/', response_class=HTMLResponse)
 def criar_livro(
     request: Request,
     titulo: Annotated[str, Form()],
@@ -58,4 +58,16 @@ def criar_livro(
 
     return RedirectResponse(
         url=router.url_path_for('listar_livros'), status_code=302
+    )
+
+
+@router.get('/{livro_id}', response_class=HTMLResponse)
+def ler_livro(livro_id: int, request: Request, session: Session):
+    livro = session.execute(
+        select(Livro).where(Livro.id == livro_id)
+    ).scalar_one_or_none()
+    
+    return templates.TemplateResponse(
+        name='detalhes.html', request=request,
+        context={'livro': livro}    
     )
