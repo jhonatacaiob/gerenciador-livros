@@ -7,6 +7,13 @@
     <script src="{{ url_for('static', path='/js/htmx.js') }}"></script>
     <link src="{{ url_for('static', path='/css/bahunya.min.css') }}"></link><link rel="stylesheet" href="{{ url_for('static', path='/css/bahunya.min.css') }}"></link>
     <title>Gerenciador de livros pessoal</title>
+
+    <style>
+        .fade-me-out.htmx-swapping {
+          opacity: 0;
+          transition: opacity 1s ease-out;
+        }
+    </style>
 </head>
 
 <body hx-boost="true">

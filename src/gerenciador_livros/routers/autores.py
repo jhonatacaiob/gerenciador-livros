@@ -24,7 +24,7 @@ Session = Annotated[Session, Depends(get_session)]
 
 @router.get('/options', response_class=HTMLResponse)
 def listar_autor_options(request: Request, session: Session):
-    autores = session.execute(select(Autor)).scalars()
+    autores = session.scalars(select(Autor))
     return templates.TemplateResponse(
         request=request, name='options.html', context={'autores': autores}
     )
