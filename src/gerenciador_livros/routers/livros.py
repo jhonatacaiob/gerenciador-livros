@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Form, Request
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, Response
 from fastapi.templating import Jinja2Templates
 from sqlmodel import Session, select
 
@@ -25,7 +25,7 @@ Session = Annotated[Session, Depends(get_session)]
 
 @router.get('/', response_class=HTMLResponse)
 def listar_livros(request: Request, session: Session):
-    livros = session.execute(select(Livro)).scalars()
+    livros = session.scalars(select(Livro))
 
     return templates.TemplateResponse(
         request=request, name='index.html', context={'livros': livros}
@@ -61,11 +61,11 @@ def criar_livro(
     )
 
 
-@router.get('/{livro_id}', response_class=HTMLResponse)
+@router.get('/{livro_id}/', response_class=HTMLResponse)
 def ler_livro(livro_id: int, request: Request, session: Session):
-    livro = session.execute(
+    livro = session.scalar(
         select(Livro).where(Livro.id == livro_id)
-    ).scalar_one_or_none()
+    )
 
     return templates.TemplateResponse(
         name='detalhes.html', request=request, context={'livro': livro}
