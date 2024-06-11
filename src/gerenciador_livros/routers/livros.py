@@ -70,3 +70,15 @@ def ler_livro(livro_id: int, request: Request, session: Session):
     return templates.TemplateResponse(
         name='detalhes.html', request=request, context={'livro': livro}
     )
+
+
+@router.delete('/{livro_id}/', response_class=Response)
+def excluir_livro(livro_id: int, request: Request, session: Session):
+    livro = session.scalar(
+        select(Livro).where(Livro.id == livro_id)
+    )
+
+    session.delete(livro)
+    session.commit()
+
+    return None

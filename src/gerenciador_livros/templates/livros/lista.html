@@ -1,5 +1,5 @@
 {% for livro in livros %}
-<tr>
+<tr class="fade-me-out">
     <td>{{livro.titulo}}</td>
     <td>{{livro.autor.nome}}</td>
     <td>{{livro.data_publicacao.year}}</td>
@@ -10,8 +10,14 @@
         <a href="http://www.google.com">Editar</a>
     </td>
     <td>
-
-        <a href="http://www.google.com">Excluir</a>
+        <a href="#"
+            hx-confirm="Você tem certeza que deseja excluir esse livro?"     
+            hx-delete="{{livro.id}}"
+            hx-target="closest tr"
+            hx-swap="outerHTML swap:1s"    
+            >
+            Excluir
+        </a>
     </td>
 </tr>
 {% endfor %}
