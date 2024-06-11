@@ -21,12 +21,19 @@ dependencies = [
   'sqlmodel==0.0.18',
   'SQLAlchemy==2.0.30',
   'alembic==1.13.1',
+  'pydantic-settings==2.2.1'
 ]
 
 [project.urls]
 Documentation = "https://github.com/jhonatacaiob/gerenciador-livros#readme"
 Issues = "https://github.com/jhonatacaiob/gerenciador-livros/issues"
 Source = "https://github.com/jhonatacaiob/gerenciador-livros"
+
+[project.optional-dependencies]
+dev = [
+    "rich==13.7.1",
+    "taskipy==1.12.2",
+]
 
 [tool.hatch.version]
 path = "src/gerenciador_livros/__about__.py"
@@ -37,6 +44,9 @@ extra-dependencies = [
 ]
 [tool.hatch.envs.types.scripts]
 check = "mypy --install-types --non-interactive {args:src/gerenciador_livros tests}"
+
+[tool.taskipy.tasks]
+run-dev-server = "fastapi dev src/gerenciador_livros/app.py"
 
 [tool.coverage.run]
 source_pkgs = ["gerenciador_livros", "tests"]
