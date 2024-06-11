@@ -1,8 +1,8 @@
+from datetime import date
 from pathlib import Path
 from typing import Annotated
-from datetime import date
 
-from fastapi import APIRouter, Depends, Request, Form
+from fastapi import APIRouter, Depends, Form, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlmodel import Session, select
@@ -66,8 +66,7 @@ def ler_livro(livro_id: int, request: Request, session: Session):
     livro = session.execute(
         select(Livro).where(Livro.id == livro_id)
     ).scalar_one_or_none()
-    
+
     return templates.TemplateResponse(
-        name='detalhes.html', request=request,
-        context={'livro': livro}    
+        name='detalhes.html', request=request, context={'livro': livro}
     )

@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
-from .routers import livros, autores
+from .routers import autores, livros
 
 app = FastAPI()
 

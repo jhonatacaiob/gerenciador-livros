@@ -3,8 +3,7 @@ from datetime import date
 from sqlmodel import Field, Relationship, SQLModel
 
 
-class Base(SQLModel):
-    ...
+class Base(SQLModel): ...
 
 
 class Autor(Base, table=True):

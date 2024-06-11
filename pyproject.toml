@@ -1,68 +1,80 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ['hatchling']
+build-backend = 'hatchling.build'
 
 [project]
-name = "gerenciador-livros"
-dynamic = ["version"]
+name = 'gerenciador-livros'
+dynamic = ['version']
 description = ''
-readme = "README.md"
-requires-python = ">=3.12.2"
-license = "MIT"
+readme = 'README.md'
+requires-python = '>=3.12.2'
+license = 'MIT'
 keywords = []
 authors = [
-  { name = "Jhonata Caio", email = "jhonatacaiob@gmail.com" },
+  { name = 'Jhonata Caio', email = 'jhonatacaiob@gmail.com' },
 ]
 classifiers = [
-  "Programming Language :: Python :: 3.12",
+  'Programming Language :: Python :: 3.12',
 ]
 dependencies = [
   'fastapi==0.111.0',
   'sqlmodel==0.0.18',
   'SQLAlchemy==2.0.30',
   'alembic==1.13.1',
-  'pydantic-settings==2.2.1'
+  'pydantic-settings==2.2.1',
 ]
 
 [project.urls]
-Documentation = "https://github.com/jhonatacaiob/gerenciador-livros#readme"
-Issues = "https://github.com/jhonatacaiob/gerenciador-livros/issues"
-Source = "https://github.com/jhonatacaiob/gerenciador-livros"
+Documentation = 'https://github.com/jhonatacaiob/gerenciador-livros#readme'
+Issues = 'https://github.com/jhonatacaiob/gerenciador-livros/issues'
+Source = 'https://github.com/jhonatacaiob/gerenciador-livros'
 
 [project.optional-dependencies]
 dev = [
-    "rich==13.7.1",
-    "taskipy==1.12.2",
+    'rich==13.7.1',
+    'taskipy==1.12.2',
 ]
 
+[tool.taskipy.tasks]
+run-server = "fastapi dev src/gerenciador_livros/app.py"
+
 [tool.hatch.version]
-path = "src/gerenciador_livros/__about__.py"
+path = 'src/gerenciador_livros/__about__.py'
 
 [tool.hatch.envs.types]
 extra-dependencies = [
-  "mypy>=1.0.0",
+  'mypy>=1.0.0',
 ]
 [tool.hatch.envs.types.scripts]
-check = "mypy --install-types --non-interactive {args:src/gerenciador_livros tests}"
+check = 'mypy --install-types --non-interactive {args:src/gerenciador_livros tests}'
 
-[tool.taskipy.tasks]
-run-dev-server = "fastapi dev src/gerenciador_livros/app.py"
+[tool.ruff]
+line-length = 79
+extend-exclude = ['migrations']
+
+[tool.ruff.lint]
+preview = true
+select = ['I', 'F', 'E', 'W', 'PL', 'PT']
+
+[tool.ruff.format]
+preview = true
+quote-style = 'single'
 
 [tool.coverage.run]
-source_pkgs = ["gerenciador_livros", "tests"]
+source_pkgs = ['gerenciador_livros', 'tests']
 branch = true
 parallel = true
 omit = [
-  "src/gerenciador_livros/__about__.py",
+  'src/gerenciador_livros/__about__.py',
 ]
 
 [tool.coverage.paths]
-gerenciador_livros = ["src/gerenciador_livros", "*/gerenciador-livros/src/gerenciador_livros"]
-tests = ["tests", "*/gerenciador-livros/tests"]
+gerenciador_livros = ['src/gerenciador_livros', '*/gerenciador-livros/src/gerenciador_livros']
+tests = ['tests', '*/gerenciador-livros/tests']
 
 [tool.coverage.report]
 exclude_lines = [
-  "no cov",
-  "if __name__ == .__main__.:",
-  "if TYPE_CHECKING:",
+  'no cov',
+  'if __name__ == .__main__.:',
+  'if TYPE_CHECKING:',
 ]
