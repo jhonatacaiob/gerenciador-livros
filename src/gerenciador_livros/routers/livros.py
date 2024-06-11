@@ -63,9 +63,7 @@ def criar_livro(
 
 @router.get('/{livro_id}/', response_class=HTMLResponse)
 def ler_livro(livro_id: int, request: Request, session: Session):
-    livro = session.scalar(
-        select(Livro).where(Livro.id == livro_id)
-    )
+    livro = session.scalar(select(Livro).where(Livro.id == livro_id))
 
     return templates.TemplateResponse(
         name='detalhes.html', request=request, context={'livro': livro}
@@ -74,11 +72,7 @@ def ler_livro(livro_id: int, request: Request, session: Session):
 
 @router.delete('/{livro_id}/', response_class=Response)
 def excluir_livro(livro_id: int, request: Request, session: Session):
-    livro = session.scalar(
-        select(Livro).where(Livro.id == livro_id)
-    )
+    livro = session.scalar(select(Livro).where(Livro.id == livro_id))
 
     session.delete(livro)
     session.commit()
-
-    return None
