@@ -5,7 +5,7 @@ from sqlmodel import Session, SQLModel, create_engine
 
 from src.gerenciador_livros.app import app
 from src.gerenciador_livros.database import get_session
-from tests.factories import AutorFactory
+from tests.factories import AutorFactory, LivroFactory
 
 
 @pytest.fixture
@@ -40,8 +40,20 @@ def session():
 @pytest.fixture
 def autor(session):
     autor = AutorFactory()
+
     session.add(autor)
     session.commit()
     session.refresh(autor)
 
     return autor
+
+
+@pytest.fixture
+def livro(session):
+    livro = LivroFactory()
+
+    session.add(livro)
+    session.commit()
+    session.refresh(livro)
+
+    return livro
