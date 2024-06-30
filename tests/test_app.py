@@ -7,5 +7,5 @@ def test_index(client):
 def test_index_redireciona_para_pagina_livros(client):
     response = client.get('/')
 
-    assert response.template.name == 'index.html'
+    assert response.template.name == 'index.html.jinja'
     assert len(response.history) > 0

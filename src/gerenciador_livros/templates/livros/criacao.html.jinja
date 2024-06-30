@@ -1,4 +1,4 @@
-{% extends 'layout.html' %}
+{% extends 'layout.html.jinja' %}
 {% block content %}
 
 <form action='/livros/' method='post'>
@@ -16,18 +16,12 @@
 
         <p>
             <label for="autor_id">Selecione um autor</label>
-            <select 
-                name="autor_id"
-                id="autor_id"
-                hx-get='/autores/options'
-                hx-target='this'
-                hx-swap='innerHTML'
-                hx-trigger="load"        
-            >
+            <select name="autor_id" id="autor_id" hx-get='/autores/options' hx-target='this' hx-swap='innerHTML'
+                hx-trigger="load">
             </select>
         </p>
 
-    
+
         <button>Save</button>
     </fieldset>
 </form>

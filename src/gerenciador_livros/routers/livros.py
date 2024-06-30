@@ -28,13 +28,15 @@ def listar_livros(request: Request, session: Session):
     livros = session.scalars(select(Livro)).all()
 
     return templates.TemplateResponse(
-        request=request, name='index.html', context={'livros': livros}
+        request=request, name='index.html.jinja', context={'livros': livros}
     )
 
 
 @router.get('/criacao/', response_class=HTMLResponse)
 def criar_livro_pagina(request: Request):
-    return templates.TemplateResponse(name='criacao.html', request=request)
+    return templates.TemplateResponse(
+        name='criacao.html.jinja', request=request
+    )
 
 
 @router.post('/', response_class=HTMLResponse)
@@ -67,7 +69,7 @@ def ler_livro(livro_id: int, request: Request, session: Session):
     livro = session.scalar(select(Livro).where(Livro.id == livro_id))
 
     return templates.TemplateResponse(
-        name='detalhes.html', request=request, context={'livro': livro}
+        name='detalhes.html.jinja', request=request, context={'livro': livro}
     )
 
 

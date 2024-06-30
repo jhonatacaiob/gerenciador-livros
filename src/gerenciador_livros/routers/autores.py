@@ -26,5 +26,7 @@ Session = Annotated[Session, Depends(get_session)]
 def listar_autor_options(request: Request, session: Session):
     autores = session.scalars(select(Autor)).all()
     return templates.TemplateResponse(
-        request=request, name='options.html', context={'autores': autores}
+        request=request,
+        name='options.html.jinja',
+        context={'autores': autores},
     )
