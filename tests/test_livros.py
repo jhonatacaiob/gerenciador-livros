@@ -71,7 +71,16 @@ def test_ler_livro_deve_retornar_o_livro_com_o_mesmo_id(
 ):
     response = client.get(f'/livros/{livro.id}/')
 
-    assert livro == response.context['livro']
+    assert response.context['livro'] == livro
+
+
+def test_ler_livro_deve_retornar_o_template_detalhes_livros(
+    client, session, livro
+):
+    response = client.get(f'/livros/{livro.id}/')
+
+    assert response.template.name == 'detalhes.html'
+    assert len(response.history) == 0
 
 
 def test_excluir_livro_deve_remover_um_registro_no_banco(
