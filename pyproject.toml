@@ -48,6 +48,19 @@ extra-dependencies = [
 [tool.hatch.envs.types.scripts]
 check = 'mypy --install-types --non-interactive {args:src/gerenciador_livros tests}'
 
+[tool.hatch.envs.hatch-test]
+extra-args = ['-vv']
+extra-dependencies = [
+  'factory-boy==3.3.0',
+  'Faker==26.0.0',
+]
+
+[tool.hatch.envs.hatch-test.scripts]
+run = "hatch fmt --check && pytest{env:HATCH_TEST_ARGS:} {args}"
+run-cov = "coverage run -m pytest{env:HATCH_TEST_ARGS:} {args}"
+cov-combine = "coverage combine"
+cov-report = "coverage report && coverage html"
+
 [tool.ruff]
 line-length = 79
 extend-exclude = ['migrations']
@@ -61,7 +74,7 @@ preview = true
 quote-style = 'single'
 
 [tool.coverage.run]
-source_pkgs = ['gerenciador_livros', 'tests']
+source_pkgs = ['src']
 branch = true
 parallel = true
 omit = [
