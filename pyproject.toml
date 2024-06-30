@@ -48,6 +48,12 @@ extra-dependencies = [
 [tool.hatch.envs.types.scripts]
 check = 'mypy --install-types --non-interactive {args:src/gerenciador_livros tests}'
 
+[tool.hatch.envs.hatch-test.scripts]
+run = "hatch fmt --check && pytest{env:HATCH_TEST_ARGS:} {args}"
+run-cov = "coverage run -m pytest{env:HATCH_TEST_ARGS:} {args}"
+cov-combine = "coverage combine"
+cov-report = "coverage report && coverage html"
+
 [tool.ruff]
 line-length = 79
 extend-exclude = ['migrations']
