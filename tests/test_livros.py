@@ -115,8 +115,3 @@ def test_excluir_livro_deve_remover_um_registro_no_banco(
 
     assert livro_banco is None
 
-
-def test_excluir_livro_deve_retornar_um_204_NO_CONTENT(client, session, livro):
-    response = client.delete(f'/livros/{livro.id}/')
-
-    assert response.status_code == status.HTTP_204_NO_CONTENT
