@@ -72,7 +72,8 @@ def ler_livro(livro_id: int, request: Request, session: Session):
 
 
 @router.delete(
-    '/{livro_id}/', response_class=Response,
+    '/{livro_id}/',
+    response_class=Response,
     status_code=status.HTTP_204_NO_CONTENT,
 )
 def excluir_livro(livro_id: int, request: Request, session: Session):

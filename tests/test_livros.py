@@ -25,6 +25,28 @@ def test_listar_livros_deve_uma_lista_de_livros(client, session, autor):
         assert isinstance(livro, Livro)
 
 
+def test_listar_livros_deve_retornar_todos_os_livros_criados(
+    client, session, autor
+):
+    len_livros = 10
+    session.bulk_save_objects(
+        LivroFactory.create_batch(len_livros, autor_id=autor.id)
+    )
+    session.commit()
+
+    response = client.get('/livros/')
+
+    assert len(response.context['livros']) == len_livros
+
+
+def test_listar_livros_deve_retornar_lista_vazia_quando_nao_ha_livros(
+    client, session, autor
+):
+    response = client.get('/livros/')
+
+    assert len(response.context['livros']) == 0
+
+
 def test_criar_livro_pagina_deve_retornar_template_criacao_livros(
     client, session
 ):
