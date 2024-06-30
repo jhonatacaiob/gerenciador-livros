@@ -1,3 +1,4 @@
+from fastapi import status
 from sqlmodel import select
 
 from src.gerenciador_livros.models import Livro
@@ -71,3 +72,20 @@ def test_ler_livro_deve_retornar_o_livro_com_o_mesmo_id(
     response = client.get(f'/livros/{livro.id}/')
 
     assert livro == response.context['livro']
+
+
+def test_excluir_livro_deve_remover_um_registro_no_banco(
+    client, session, livro
+):
+    _ = client.delete(f'/livros/{livro.id}/')
+
+    stmt = select(Livro).where(Livro.id == livro.id)
+    livro_banco = session.scalar(stmt)
+
+    assert livro_banco is None
+
+
+def test_excluir_livro_deve_retornar_um_204_NO_CONTENT(client, session, livro):
+    response = client.delete(f'/livros/{livro.id}/')
+
+    assert response.status_code == status.HTTP_204_NO_CONTENT
