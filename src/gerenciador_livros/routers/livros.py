@@ -2,7 +2,7 @@ from datetime import date
 from pathlib import Path
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, Form, Request
+from fastapi import APIRouter, Depends, Form, Request, status
 from fastapi.responses import HTMLResponse, RedirectResponse, Response
 from fastapi.templating import Jinja2Templates
 from sqlmodel import Session, select
@@ -25,10 +25,10 @@ Session = Annotated[Session, Depends(get_session)]
 
 @router.get('/', response_class=HTMLResponse)
 def listar_livros(request: Request, session: Session):
-    livros = session.scalars(select(Livro))
+    livros = session.scalars(select(Livro)).all()
 
     return templates.TemplateResponse(
-        request=request, name='index.html', context={'livros': livros.all()}
+        request=request, name='index.html', context={'livros': livros}
     )
 
 
@@ -57,7 +57,8 @@ def criar_livro(
     session.commit()
 
     return RedirectResponse(
-        url=router.url_path_for('listar_livros'), status_code=302
+        url=router.url_path_for('listar_livros'),
+        status_code=status.HTTP_302_FOUND,
     )
 
 
@@ -70,7 +71,10 @@ def ler_livro(livro_id: int, request: Request, session: Session):
     )
 
 
-@router.delete('/{livro_id}/', response_class=Response)
+@router.delete(
+    '/{livro_id}/', response_class=Response,
+    status_code=status.HTTP_204_NO_CONTENT,
+)
 def excluir_livro(livro_id: int, request: Request, session: Session):
     livro = session.scalar(select(Livro).where(Livro.id == livro_id))
 
