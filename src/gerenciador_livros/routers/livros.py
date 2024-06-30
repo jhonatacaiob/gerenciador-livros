@@ -28,7 +28,7 @@ def listar_livros(request: Request, session: Session):
     livros = session.scalars(select(Livro))
 
     return templates.TemplateResponse(
-        request=request, name='index.html', context={'livros': livros}
+        request=request, name='index.html', context={'livros': livros.all()}
     )
 
 
