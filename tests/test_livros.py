@@ -52,7 +52,7 @@ def test_criar_livro_pagina_deve_retornar_template_criacao_livros(
 ):
     response = client.get('/livros/criacao/')
 
-    assert response.template.name == 'criacao.html'
+    assert response.template.name == 'criacao.html.jinja'
     assert len(response.history) == 0
 
 
@@ -84,7 +84,7 @@ def test_criar_livro_deve_redirecionar_para_index(client, session, autor):
         },
     )
 
-    assert response.template.name == 'index.html'
+    assert response.template.name == 'index.html.jinja'
     assert len(response.history) > 0
 
 
@@ -101,7 +101,7 @@ def test_ler_livro_deve_retornar_o_template_detalhes_livros(
 ):
     response = client.get(f'/livros/{livro.id}/')
 
-    assert response.template.name == 'detalhes.html'
+    assert response.template.name == 'detalhes.html.jinja'
     assert len(response.history) == 0
 
 

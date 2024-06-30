@@ -10,12 +10,8 @@
         <a href="http://www.google.com">Editar</a>
     </td>
     <td>
-        <a href="#"
-            hx-confirm="Você tem certeza que deseja excluir esse livro?"     
-            hx-delete="{{livro.id}}"
-            hx-target="closest tr"
-            hx-swap="outerHTML swap:1s"    
-        >
+        <a href="#" hx-confirm="Você tem certeza que deseja excluir esse livro?" hx-delete="{{livro.id}}"
+            hx-target="closest tr" hx-swap="outerHTML swap:1s">
             Excluir
         </a>
     </td>

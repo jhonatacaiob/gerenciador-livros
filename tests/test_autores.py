@@ -40,4 +40,4 @@ def test_listar_autores_options_deve_retornar_template_options_autores(
 ):
     response = client.get('/autores/options/')
 
-    assert response.template.name == 'options.html'
+    assert response.template.name == 'options.html.jinja'
