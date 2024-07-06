@@ -1,3 +1,8 @@
+{% if autor_selecionado is none %}
+<option value="" selected disabled hidden>Choose here</option>
+{% endif %}
 {% for autor in autores %}
-<option value="{{autor.id}}">{{autor.nome}}</option>
+<option value="{{autor.id}}" {% if autor.id==autor_selecionado %}selected{% endif %}>
+    {{autor.nome}}
+</option>
 {% endfor %}

@@ -22,11 +22,11 @@ templates = Jinja2Templates(
 Session = Annotated[Session, Depends(get_session)]
 
 
-@router.get('/options', response_class=HTMLResponse)
-def listar_autor_options(request: Request, session: Session):
+@router.get('/options/', response_class=HTMLResponse)
+def listar_autor_options(request: Request, session: Session, autor_selecionado: int | None= None):
     autores = session.scalars(select(Autor)).all()
     return templates.TemplateResponse(
         request=request,
         name='options.html.jinja',
-        context={'autores': autores},
+        context={'autores': autores, 'autor_selecionado': autor_selecionado},
     )
