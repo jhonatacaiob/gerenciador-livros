@@ -4,10 +4,10 @@
     <td>{{livro.autor.nome}}</td>
     <td>{{livro.data_publicacao.year}}</td>
     <td>
-        <a href="{{livro.id}}">Visualizar</a>
+        <a href="{{livro.id}}/">Visualizar</a>
     </td>
     <td>
-        <a href="http://www.google.com">Editar</a>
+        <a href="/livros/edicao/{{livro.id}}/">Editar</a>
     </td>
     <td>
         <a href="#" hx-confirm="Você tem certeza que deseja excluir esse livro?" hx-delete="{{livro.id}}"

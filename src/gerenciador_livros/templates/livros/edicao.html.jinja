@@ -1,0 +1,32 @@
+{% extends 'layout.html.jinja' %}
+{% block content %}
+
+<form>
+    <fieldset>
+        <legend>Dados do livro</legend>
+        <p>
+            <label for="titulo">Título do livro</label>
+            <input name="titulo" id="titulo" type="text" placeholder="Título do livro" value="{{livro.titulo}}">
+        </p>
+
+        <p>
+            <label for="data_publicacao">Título do livro</label>
+            <input name="data_publicacao" id="data_publicacao" type="date" placeholder="Data de publicação"
+                value="{{livro.data_publicacao.strftime('%Y-%m-%d')}}">
+        </p>
+
+        <p>
+            <label for="autor_id">Selecione um autor</label>
+            <select name="autor_id" id="autor_id" hx-get='/autores/options/'
+                hx-target='this' hx-swap='innerHTML'
+                hx-trigger="load" hx-vals='{"autor_selecionado": "{{livro.autor_id}}"}'
+                value="{{livro.autor_id}}">
+            </select>
+        </p>
+
+
+        <button hx-put="/livros/{{livro.id}}" hx-include="p > input" hx-target="body">Editar</button>
+    </fieldset>
+</form>
+
+{% endblock %}
