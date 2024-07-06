@@ -68,6 +68,37 @@ def criar_livro(
     )
 
 
+@router.get('/edicao/{livro_id}/', response_class=HTMLResponse)
+def editar_livro_pagina(livro_id: int, request: Request, session: Session):
+    livro = session.scalar(select(Livro).where(Livro.id == livro_id))
+
+    return templates.TemplateResponse(
+        name='edicao.html.jinja', request=request, context={'livro': livro}
+    )
+
+
+@router.put('/{livro_id}/', response_class=HTMLResponse)
+def editar_livro(
+    livro_id: int,
+    request: Request,
+    session: Session,
+    form_data: BodyForm = Depends(),
+):
+    livro = session.scalar(select(Livro).where(Livro.id == livro_id))
+
+    livro.titulo = form_data.titulo
+    livro.data_publicacao = form_data.data_publicacao
+    livro.autor_id = form_data.autor_id
+
+    session.add(livro)
+    session.commit()
+
+    return RedirectResponse(
+        url=router.url_path_for('listar_livros'),
+        status_code=status.HTTP_303_SEE_OTHER,
+    )
+
+
 @router.get('/{livro_id}/', response_class=HTMLResponse)
 def ler_livro(livro_id: int, request: Request, session: Session):
     livro = session.scalar(select(Livro).where(Livro.id == livro_id))
