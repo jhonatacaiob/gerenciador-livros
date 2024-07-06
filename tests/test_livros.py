@@ -87,6 +87,52 @@ def test_criar_livro_deve_redirecionar_para_index(client, session, autor):
     assert len(response.history) > 0
 
 
+def test_editar_livro_pagina_deve_retornar_template_criacao_livros(
+    client, session, livro
+):
+    response = client.get(f'/livros/edicao/{livro.id}/')
+
+    assert response.template.name == 'edicao.html.jinja'
+    assert len(response.history) == 0
+
+
+def test_editar_livro_deve_editar_um_registro_no_banco(
+    client, session, autor, livro
+):
+    livro_fake = LivroFactory(id=livro.id, autor_id=autor.id)
+
+    _ = client.put(
+        f'/livros/{livro.id}/',
+        data={
+            'titulo': livro_fake.titulo,
+            'data_publicacao': livro_fake.data_publicacao,
+            'autor_id': autor.id,
+        },
+    )
+
+    stmt = select(Livro).where(Livro.id == livro.id)
+    livro_banco = session.scalar(stmt)
+
+    assert livro_banco == livro_fake
+
+
+def test_editar_livro_deve_redirecionar_para_index(
+    client, session, autor, livro
+):
+    livro_fake = LivroFactory(id=1, autor_id=autor.id)
+    response = client.put(
+        '/livros/1/',
+        data={
+            'titulo': livro_fake.titulo,
+            'data_publicacao': livro_fake.data_publicacao,
+            'autor_id': autor.id,
+        },
+    )
+
+    assert response.template.name == 'index.html.jinja'
+    assert len(response.history) > 0
+
+
 def test_ler_livro_deve_retornar_o_livro_com_o_mesmo_id(
     client, session, livro
 ):
