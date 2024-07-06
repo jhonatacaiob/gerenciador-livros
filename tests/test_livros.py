@@ -1,4 +1,3 @@
-from fastapi import status
 from sqlmodel import select
 
 from src.gerenciador_livros.models import Livro
@@ -114,4 +113,3 @@ def test_excluir_livro_deve_remover_um_registro_no_banco(
     livro_banco = session.scalar(stmt)
 
     assert livro_banco is None
-

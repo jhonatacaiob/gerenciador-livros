@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
 from typing import Annotated
@@ -23,6 +24,13 @@ templates = Jinja2Templates(
 Session = Annotated[Session, Depends(get_session)]
 
 
+@dataclass
+class BodyForm:
+    titulo: Annotated[str, Form()]
+    data_publicacao: Annotated[date, Form()]
+    autor_id: Annotated[str | None, Form()]
+
+
 @router.get('/', response_class=HTMLResponse)
 def listar_livros(request: Request, session: Session):
     livros = session.scalars(select(Livro)).all()
@@ -42,17 +50,13 @@ def criar_livro_pagina(request: Request):
 @router.post('/', response_class=HTMLResponse)
 def criar_livro(
     request: Request,
-    titulo: Annotated[str, Form()],
-    data_publicacao: Annotated[str, Form()],
-    autor_id: Annotated[str | None, Form()],
     session: Session,
+    form_data: BodyForm = Depends(),
 ):
-    ano, mes, dia = data_publicacao.split('-')
-
     livro = Livro(
-        titulo=titulo,
-        data_publicacao=date(int(ano), int(mes), int(dia)),
-        autor_id=autor_id,
+        titulo=form_data.titulo,
+        data_publicacao=form_data.data_publicacao,
+        autor_id=form_data.autor_id,
     )
 
     session.add(livro)
