@@ -19,7 +19,7 @@ templates = Jinja2Templates(
     directory=[(templates_dir), (templates_dir / 'autores')]
 )
 
-Session = Annotated[Session, Depends(get_session)]
+Session = Annotated[Session, Depends(get_session)]  # type: ignore
 
 
 @router.get('/options/', response_class=HTMLResponse)

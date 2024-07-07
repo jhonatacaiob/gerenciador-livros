@@ -21,14 +21,14 @@ templates = Jinja2Templates(
     directory=[(templates_dir), (templates_dir / 'livros')]
 )
 
-Session = Annotated[Session, Depends(get_session)]
+Session = Annotated[Session, Depends(get_session)]  # type: ignore
 
 
 @dataclass
 class BodyForm:
     titulo: Annotated[str, Form()]
     data_publicacao: Annotated[date, Form()]
-    autor_id: Annotated[str | None, Form()]
+    autor_id: Annotated[int, Form()]
 
 
 @router.get('/', response_class=HTMLResponse)
@@ -86,9 +86,10 @@ def editar_livro(
 ):
     livro = session.scalar(select(Livro).where(Livro.id == livro_id))
 
-    livro.titulo = form_data.titulo
-    livro.data_publicacao = form_data.data_publicacao
-    livro.autor_id = form_data.autor_id
+    if livro:
+        livro.titulo = form_data.titulo
+        livro.data_publicacao = form_data.data_publicacao
+        livro.autor_id = form_data.autor_id
 
     session.add(livro)
     session.commit()
