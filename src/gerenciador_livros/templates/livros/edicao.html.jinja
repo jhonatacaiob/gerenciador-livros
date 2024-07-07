@@ -17,15 +17,13 @@
 
         <p>
             <label for="autor_id">Selecione um autor</label>
-            <select name="autor_id" id="autor_id" hx-get='/autores/options/'
-                hx-target='this' hx-swap='innerHTML'
-                hx-trigger="load" hx-vals='{"autor_selecionado": "{{livro.autor_id}}"}'
-                value="{{livro.autor_id}}">
+            <select name="autor_id" id="autor_id" hx-get='/autores/options/' hx-target='this' hx-swap='innerHTML'
+                hx-trigger="load" hx-vals='{"autor_selecionado": "{{livro.autor_id}}"}' value="{{livro.autor_id}}">
             </select>
         </p>
 
 
-        <button hx-put="/livros/{{livro.id}}" hx-include="p > input" hx-target="body">Editar</button>
+        <button hx-put="/livros/{{livro.id}}/" hx-push-url="true" hx-include="p > input" hx-target="body">Editar</button>
     </fieldset>
 </form>
 
